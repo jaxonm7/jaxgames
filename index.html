@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jax Games</title>
     <style>
-        /* Basic Reset and Theme */
+        /* Basic Reset and Cyan Dark Theme */
         body {
             margin: 0;
             padding: 0;
-            background-color: #121212;
+            background-color: #0b1416;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: white;
+            color: #e0f7fa;
             overflow-x: hidden;
         }
         
@@ -30,7 +30,10 @@
         }
 
         .jax { color: white; }
-        .games-red { color: #ff4d4d; }
+        .games-cyan { 
+            color: #00e5ff; 
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+        }
 
         /* Main Content */
         .container {
@@ -47,9 +50,10 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid #004d40;
             display: inline-block;
             padding-bottom: 10px;
+            color: #80deea;
         }
 
         /* Button Grid Layout */
@@ -60,7 +64,7 @@
             gap: 40px;
         }
 
-        /* The Link Wrapper - keeps layout clean */
+        /* The Link Wrapper */
         .game-link {
             text-decoration: none;
             display: block;
@@ -68,10 +72,11 @@
 
         /* Game Button Styling */
         .game-button {
+            position: relative;
             width: 200px;
             height: 200px;
-            background-color: #1e1e1e;
-            border: 4px solid transparent;
+            background-color: #122326;
+            border: 4px solid #004d56;
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
@@ -88,20 +93,87 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
-    /* Hover State applied via the link */
+
+        /* Hover State */
         .game-link:hover .game-button {
-            border-color: #8400ff; 
+            border-color: #00e5ff; 
             transform: scale(1.08) translateY(-10px);
-            box-shadow: 0 15px 30px rgba(255, 77, 77, 0.3
-        </style>
+            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.4);
+        }
+
+        /* --- Loading Screen Overlay Inside Button --- */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 20, 22, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+
+        /* Spinner Ring */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 229, 255, 0.2);
+            border-top: 4px solid #00e5ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        /* Loading Text */
+        .loading-text {
+            color: #00e5ff;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulseText 1.5s ease-in-out infinite;
+        }
+
+        /* --- Active Clicked States via JavaScript --- */
+        .game-button.is-loading {
+            border-color: #b2f5ea !important; /* Light Cyan Border */
+            box-shadow: 0 0 35px rgba(178, 245, 234, 0.8) !important; /* Bright Light Cyan Outer Glow */
+            transform: scale(0.98) !important; /* Subtle press effect */
+        }
+
+        .game-button.is-loading .loading-overlay {
+            opacity: 1;
+        }
+
+        .game-button.is-loading img {
+            filter: blur(2px);
+        }
+
+        /* Keyframe Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
 
     <header>
         <div class="logo">
-            <span class="jax">JAX</span> <span class="games-red">GAMES</span>
+            <span class="jax">JAX</span> <span class="games-cyan">GAMES</span>
         </div>
     </header>
 
@@ -111,136 +183,245 @@
         <div class="game-grid">
             <a href="https://jaxonm7.github.io/gtag/" class="game-link">
                 <button class="game-button">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
                     <img src="gtag.jpeg" alt="Gorilla Tag">
                 </button>
             </a>
 
             <a href="https://jaxonm7.github.io/blockblast/" class="game-link">
                 <button class="game-button">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
                     <img src="blockblast.png" alt="Block Blast">
                 </button>
             </a>
 
             <a href="https://jaxonm7.github.io/minecraftpocket/" class="game-link">
                 <button class="game-button">
-                    <img src="pocketminecraft.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="pocketminecraft.png" alt="Minecraft Pocket Edition">
                 </button>
             </a>
 
             <a href="https://jaxonm7.github.io/1v1.lol/" class="game-link">
                 <button class="game-button">
-                    <img src="6764d93be2b78_lol.onevone.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="6764d93be2b78_lol.onevone.png" alt="1v1.lol">
                 </button>
             </a>
             
             <a href="https://jaxonm7.github.io/granny/" class="game-link">
                 <button class="game-button">
-                    <img src="unnamed.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="unnamed.png" alt="Granny">
                 </button>
             </a>
             
             <a href="https://jaxonm7.github.io/cookieclicker/" class="game-link">
                 <button class="game-button">
-                    <img src="cookiegames.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="cookiegames.png" alt="Cookie Clicker">
                 </button>
             </a>
             
             <a href="https://jaxonm7.github.io/fnaf1/" class="game-link">
                 <button class="game-button">
-                    <img src="freddy from fnaf1.avif" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="freddy from fnaf1.avif" alt="FNAF 1">
                 </button>
             </a>
         
             <a href="https://jaxonm7.github.io/fnaf2/" class="game-link">
                 <button class="game-button">
-                    <img src="fnaf2.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="fnaf2.png" alt="FNAF 2">
                 </button>
              </a>
         
             <a href="https://jaxonm7.github.io/fnaf3/" class="game-link">
                 <button class="game-button">
-                    <img src="Screenshot 2026-06-02 214830.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="Screenshot 2026-06-02 214830.png" alt="FNAF 3">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/fnaf4/" class="game-link">
                 <button class="game-button">
-                    <img src="Fnaf_4_desktop_icon.webp" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="Fnaf_4_desktop_icon.webp" alt="FNAF 4">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/hollowknightsilksong/" class="game-link">
                 <button class="game-button">
-                    <img src="hollowknightsilksong.jpg" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="hollowknightsilksong.jpg" alt="Hollow Knight Silksong">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/thatsnotmyneighbour/" class="game-link">
                 <button class="game-button">
-                    <img src="tnmn.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="tnmn.png" alt="That's Not My Neighbor">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/thebackrooms/" class="game-link">
                 <button class="game-button">
-                    <img src="backrooms.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="backrooms.png" alt="The Backrooms">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/hidenseek/" class="game-link">
                 <button class="game-button">
-                    <img src="hide n seek.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="hide n seek.png" alt="Hide and Seek">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/aquapark/" class="game-link">
                 <button class="game-button">
-                    <img src="aquapark.webp" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="aquapark.webp" alt="Aquapark.io">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/baldisbasicsremasterd/" class="game-link">
                 <button class="game-button">
-                    <img src="baldis basics remasterd.png" alt="">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="baldis basics remasterd.png" alt="Baldi's Basics Remastered">
                 </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/2dworldcup/" class="game-link">
                 <button class="game-button">
-                    <img src="a small world cup.png" alt="">
-                </button><
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="a small world cup.png" alt="A Small World Cup">
+                </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/cheeserolling/" class="game-link">
                 <button class="game-button">
-                    <img src="cheeserolling.png" alt="">
-                </button><
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="cheeserolling.png" alt="Cheese Rolling">
+                </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/soundboardamaze/" class="game-link">
                 <button class="game-button">
-                    <img src="Screenshot 2026-06-05 174505.png" alt="">
-                </button><
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="Screenshot 2026-06-05 174505.png" alt="Soundboard Amaze">
+                </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/flappybird/" class="game-link">
                 <button class="game-button">
-                    <img src="flappybird.png" alt="">
-                </button><
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="flappybird.png" alt="Flappy Bird">
+                </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/rocketgoal/" class="game-link">
                 <button class="game-button">
-                    <img src="rocketgoal.png" alt="">
-                </button><
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="rocketgoal.png" alt="Rocket Goal">
+                </button>
             </a>
                 
             <a href="https://jaxonm7.github.io/soundboard/" class="game-link">
                 <button class="game-button">
-                    <img src="Screenshot 2026-03-29 202654.png" alt="">
-                </button><
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Loading</div>
+                    </div>
+                    <img src="Screenshot 2026-03-29 202654.png" alt="Soundboard">
+                </button>
+            </a>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.game-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 1. Prevent immediate redirect to show off the animation
+                e.preventDefault();
+                
+                const button = this.querySelector('.game-button');
+                const targetUrl = this.href;
+
+                // 2. Add the loading class (Triggers light cyan glow and animated spinner)
+                button.classList.add('is-loading');
+
+                // 3. Wait 1.2 seconds for the animation effect, then redirect!
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 1200);
+            });
+        });
+    </script>
         
 </body>
 </html>
